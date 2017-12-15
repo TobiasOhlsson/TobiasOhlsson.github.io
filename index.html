@@ -13,8 +13,16 @@
             margin: 0;
             padding: 0;
         }
+         .startText {
+             font-size: xx-large;
+             color: red;
+             position: absolute;
+             z-index: 1;
+             }
     </style>
+
     <script>
+        var startText;
         var count = 100;
         var lifeTime = 5;
         var lifeTimeMult = 10;
@@ -30,6 +38,7 @@
         }
 
         function createFire() {
+            startText.style.visibility = "hidden";
             fires = [];
             for(var a = 0; a < count; a++){
                 fires.push({"x":initalizer(x_fire +(count/2),(-count)), "y":y_fire, "r":initalizer(size,sizeMult), "vy":initalizer(speed,speedMult),"life":initalizer(lifeTime,lifeTimeMult)})
@@ -56,7 +65,7 @@
             var x_Mouse = event.clientX;     // Get the horizontal coordinate
             var y_Mouse = event.clientY;     // Get the vertical coordinate
             console.log(x_Mouse + " " + y_Mouse);
-            if(Math.abs(x_Mouse - x_fire) < 50 && Math.abs(y_Mouse == y_fire) < 50){
+            if(Math.abs(x_Mouse - x_fire) < 50 && Math.abs(y_Mouse - y_fire) < 50){
                 bigger();
             } else { moveFire(x_Mouse, y_Mouse);}
         }
@@ -88,7 +97,7 @@
                 ctx.arc(fires[b].x,fires[b].y,fires[b].r,0*Math.PI,2*Math.PI);
                 ctx.fill();
                 fires[b].y -= fires[b].vy;
-                fires[b].r-=0.5;
+                fires[b].r -= Math.max(fires[b].r * 0.025, 0.5);
                 fires[b].life-=0.2;
 
                 if(fires[b].life<0 || fires[b].r <0){
@@ -108,11 +117,19 @@
             w = window.innerWidth;
             canvas.height = h;
             canvas.width = w;
+
+            startText = document.querySelector("#startText");
+            startText.style.left = w/3 + "px";
+            startText.style.top = h/2  + "px";
+
             setInterval(aktion ,100);
         }
     </script>
 </head>
 <body onclick="lol()">
 <canvas id ="canvas"></canvas>
+<div id = "startText" class="startText">
+    Press anywhere to light up a fire
+</div>
 </body>
 </html>
