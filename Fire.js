@@ -8,13 +8,14 @@ var size = 10;
 var sizeMult = 10;
 var x_fire = 0;
 var y_fire = 0;
+var rotation = 0;
 
 function initalizer(a, b) {
     return a+b*Math.random();
 }
 
 function createFire() {
-    //startText.style.visibility = "hidden";
+    startText.style.visibility = "hidden";
     fires = [];
     for(var a = 0; a < count; a++){
         fires.push({"x":initalizer(x_fire +(count/2),(-count)), "y":y_fire, "r":initalizer(size,sizeMult), "vy":initalizer(speed,speedMult),"life":initalizer(lifeTime,lifeTimeMult)})
@@ -63,7 +64,8 @@ function display() {
         ctx.beginPath();
         ctx.arc(fires[b].x,fires[b].y,fires[b].r,0*Math.PI,2*Math.PI);
         ctx.fill();
-        fires[b].y -= fires[b].vy;
+        fires[b].x -= fires[b].vy*rotation/90;
+        fires[b].y -= fires[b].vy*(1 - Math.abs(rotation/90));
         fires[b].r -= Math.max(fires[b].r * 0.025, 0.5);
         fires[b].life-=0.2;
 
@@ -103,7 +105,8 @@ window.onclick = function (ev) { var x_Mouse = event.clientX;     // Get the hor
 window.ondeviceorientation = function (ev) {
     if (ev.absolute) {
         startText.innerHTML = ev.gamma;
-    } else {startText.innerHTML="NEEEEEEEEIN"}
+        rotation = ev.gamma;
+    }
 }
 
 /**window.ondevicemotion = function(event) {
@@ -112,3 +115,5 @@ window.ondeviceorientation = function (ev) {
         startText.innerHTML = rates.alpha + "kdsljn";
     } else {startText.innerHTML = "PDAOJV K"}
 }*/
+
+window.orientation
