@@ -100,8 +100,9 @@ window.onclick = function (ev) { var x_Mouse = event.clientX;     // Get the hor
     } else { moveFire(x_Mouse, y_Mouse);}
 }
 
-window.ondeviceorientation = function(event) {
-    if(event.absolute){
-        startText.innerHTML = event.alpha;
-    } else {startText.innerHTML = "FUCK YOU :D"}
+window.ondevicemotion = function(event) {
+    var rates = instanceOfDeviceMotionEvent.rotationRate;
+    if (rates != null){
+        startText.innerHTML = rates.alpha;
+    }
 }
