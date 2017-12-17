@@ -100,9 +100,15 @@ window.onclick = function (ev) { var x_Mouse = event.clientX;     // Get the hor
     } else { moveFire(x_Mouse, y_Mouse);}
 }
 
-window.ondevicemotion = function(event) {
+window.ondeviceorientation = function (ev) {
+    if (ev.absolute) {
+        startText.innerHTML = ev.gamma;
+    } else {startText.innerHTML="NEEEEEEEEIN"}
+}
+
+/**window.ondevicemotion = function(event) {
     var rates = event.rotationRate;
     if (rates.alpha != null){
         startText.innerHTML = rates.alpha + "kdsljn";
     } else {startText.innerHTML = "PDAOJV K"}
-}
+}*/
