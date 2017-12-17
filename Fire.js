@@ -101,8 +101,8 @@ window.onclick = function (ev) { var x_Mouse = event.clientX;     // Get the hor
 }
 
 window.ondevicemotion = function(event) {
-    var rates = instanceOfDeviceMotionEvent.rotationRate;
-    if (rates != null){
-        startText.innerHTML = rates.alpha;
+    var rates = event.rotationRate;
+    if (rates.alpha != null){
+        startText.innerHTML = rates.alpha + "kdsljn";
     }
 }
