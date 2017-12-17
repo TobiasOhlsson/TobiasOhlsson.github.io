@@ -103,5 +103,5 @@ window.onclick = function (ev) { var x_Mouse = event.clientX;     // Get the hor
 window.ondeviceorientation = function(event) {
     if(event.absolute){
         startText.innerHTML = event.alpha;
-    }
+    } else {startText.innerHTML = "FUCK YOU :D"}
 }
