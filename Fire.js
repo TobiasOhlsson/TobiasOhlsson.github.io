@@ -104,5 +104,5 @@ window.ondevicemotion = function(event) {
     var rates = event.rotationRate;
     if (rates.alpha != null){
         startText.innerHTML = rates.alpha + "kdsljn";
-    }
+    } else {startText.innerHTML = "PDAOJV K"}
 }
