@@ -37,15 +37,6 @@ function bigger(){
     }
 }
 
-function kindle(){
-    var x_Mouse = event.clientX;     // Get the horizontal coordinate
-    var y_Mouse = event.clientY;     // Get the vertical coordinate
-    console.log(x_Mouse + " " + y_Mouse);
-    if(Math.abs(x_Mouse - x_fire) < 50 && Math.abs(y_Mouse - y_fire) < 50){
-        bigger();
-    } else { moveFire(x_Mouse, y_Mouse);}
-}
-
 function moveFire(x,y) {
     x_fire = x;
     y_fire = y;
@@ -99,4 +90,20 @@ window.onload=function(){
     startText.style.top = h/2  + "px";
 
     setInterval(display ,100);
+}
+
+window.onclick = function (ev) { var x_Mouse = event.clientX;     // Get the horizontal coordinate
+    var y_Mouse = event.clientY;     // Get the vertical coordinate
+    console.log(x_Mouse + " " + y_Mouse);
+    if(Math.abs(x_Mouse - x_fire) < 50 && Math.abs(y_Mouse - y_fire) < 50){
+        bigger();
+    } else { moveFire(x_Mouse, y_Mouse);}
+}
+
+window.ondeviceorientation = function(event) {
+    if(event.absolute){
+        if (event.alpha > 180) {
+            smaller();
+        }
+    }
 }

@@ -1,35 +1,20 @@
-<!DOCTYPE html>
 <html>
+
+<head>
+    <meta
+            name='viewport'
+            content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+    />
+    <title>Fire</title>
+    <link rel="stylesheet" type="text/css" href="design.css">
+    <script src="Fire.js"></script>
+</head>
+
 <body>
-
- <canvas id="myCanvas" width="600" height="600" style="border:1px solid #000000;">
-</canvas> 
-
-<script>
-
-window.ondevicemotion = function(event) { 
-	ralpha = event.rotationRate.alpha;
-	rbeta = event.rotationRate.beta;
-	rgamma = event.rotationRate.gamma;
-	
-	var img = new Image();
-	img.src = "teco.jpg";
-	half_width = img.naturalWidth / 2;
-	half_height = img.naturalHeight / 2;
-
-	var c = document.getElementById("myCanvas");
-	var context = c.getContext("2d");
-	var canvasWidth = 600;
-	var canvasHeight = 600; 
-	
-	context.clearRect(0, 0, canvasWidth, canvasHeight);
-	context.translate(canvasWidth/2, canvasWidth/2);
-	context.rotate( 0.895 * rgamma * (Math.PI / 180));
-	context.translate(-canvasWidth/2, -canvasWidth/2);
-	context.drawImage(img, canvasWidth/2 - half_width, canvasHeight/2 - half_height);
-}
-
-</script>
-
+    <canvas id ="canvas"></canvas>
+    <div id = "startText" class="startText">
+        Press anywhere to light up a fire
+    </div>
 </body>
+
 </html>
