@@ -1,0 +1,102 @@
+var startText;
+var count = 100;
+var lifeTime = 5;
+var lifeTimeMult = 10;
+var speed = 1;
+var speedMult = 10;
+var size = 10;
+var sizeMult = 10;
+var x_fire = 0;
+var y_fire = 0;
+
+function initalizer(a, b) {
+    return a+b*Math.random();
+}
+
+function createFire() {
+    startText.style.visibility = "hidden";
+    fires = [];
+    for(var a = 0; a < count; a++){
+        fires.push({"x":initalizer(x_fire +(count/2),(-count)), "y":y_fire, "r":initalizer(size,sizeMult), "vy":initalizer(speed,speedMult),"life":initalizer(lifeTime,lifeTimeMult)})
+    }
+}
+
+function smaller(){
+    count -= 20;
+    sizeMult -= 2;
+    for(var i = 0; i < 20; i++){
+        fires.pop();
+    }
+}
+
+function bigger(){
+    count += 20;
+    sizeMult += 2;
+    for(var i = 0; i < 20; i++){
+        fires.push({"x":initalizer(x_fire +(count/2),(-count)), "y":y_fire, "r":initalizer(size,sizeMult), "vy":initalizer(speed,speedMult),"life":initalizer(lifeTime,lifeTimeMult)})
+    }
+}
+
+function kindle(){
+    var x_Mouse = event.clientX;     // Get the horizontal coordinate
+    var y_Mouse = event.clientY;     // Get the vertical coordinate
+    console.log(x_Mouse + " " + y_Mouse);
+    if(Math.abs(x_Mouse - x_fire) < 50 && Math.abs(y_Mouse - y_fire) < 50){
+        bigger();
+    } else { moveFire(x_Mouse, y_Mouse);}
+}
+
+function moveFire(x,y) {
+    x_fire = x;
+    y_fire = y;
+    count = 100;
+    sizeMult = 10;
+    createFire();
+}
+
+function rotate(){}
+
+function display() {
+    ctx.fillStyle="black";
+    ctx.clearRect(0,0,w,h);
+    ctx.fillRect(0,0,w,h);
+    ctx.globalCompositeOperation="lighter";
+    for(var b = 0; b < count; b++){
+        var renk = ctx.createRadialGradient(fires[b].x,fires[b].y,2,fires[b].x,fires[b].y,fires[b].r);
+        renk.addColorStop(0, "white");
+        renk.addColorStop(0.4, "yellow");
+        renk.addColorStop(0.6, "orange");
+        renk.addColorStop(1, "red");
+        ctx.fillStyle = renk;
+
+        ctx.beginPath();
+        ctx.arc(fires[b].x,fires[b].y,fires[b].r,0*Math.PI,2*Math.PI);
+        ctx.fill();
+        fires[b].y -= fires[b].vy;
+        fires[b].r -= Math.max(fires[b].r * 0.025, 0.5);
+        fires[b].life-=0.2;
+
+        if(fires[b].life<0 || fires[b].r <0){
+            fires[b].x = initalizer(x_fire +(count/2),(-count))
+            fires[b].y = y_fire;
+            fires[b].r = initalizer(size,sizeMult);
+            fires[b].life = initalizer(lifeTime, lifeTimeMult);
+            fires[b].vy = initalizer(speed,speedMult);
+        }
+    }
+}
+
+window.onload=function(){
+    canvas= document.querySelector("#canvas");
+    ctx = canvas.getContext("2d");
+    h = window.innerHeight;
+    w = window.innerWidth;
+    canvas.height = h;
+    canvas.width = w;
+
+    startText = document.querySelector("#startText");
+    startText.style.left = w/3 + "px";
+    startText.style.top = h/2  + "px";
+
+    setInterval(display ,100);
+}
