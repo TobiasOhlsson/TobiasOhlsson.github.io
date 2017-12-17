@@ -14,7 +14,7 @@ function initalizer(a, b) {
 }
 
 function createFire() {
-    startText.style.visibility = "hidden";
+    //startText.style.visibility = "hidden";
     fires = [];
     for(var a = 0; a < count; a++){
         fires.push({"x":initalizer(x_fire +(count/2),(-count)), "y":y_fire, "r":initalizer(size,sizeMult), "vy":initalizer(speed,speedMult),"life":initalizer(lifeTime,lifeTimeMult)})
@@ -102,8 +102,6 @@ window.onclick = function (ev) { var x_Mouse = event.clientX;     // Get the hor
 
 window.ondeviceorientation = function(event) {
     if(event.absolute){
-        if (event.alpha > 180) {
-            smaller();
-        }
+        startText.innerHTML = event.alpha;
     }
 }
