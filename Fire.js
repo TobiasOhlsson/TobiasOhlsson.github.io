@@ -91,7 +91,7 @@ function display() {
 
     if(meter != null) {
         startText.innerHTML = meter.volume;
-        if(meter.volume > 0.75) {
+        if(meter.volume > 0.4) {
             smaller();
         }
     }
