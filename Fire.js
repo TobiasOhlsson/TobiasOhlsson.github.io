@@ -104,9 +104,9 @@ function createFire() {
 }
 
 function smaller(){
-    count -= 20;
-    sizeMult -= 2;
-    for(var i = 0; i < 20; i++){
+    count -= 10;
+    sizeMult -= 1;
+    for(var i = 0; i < 10; i++){
         fires.pop();
     }
 }
@@ -133,6 +133,15 @@ window.onclick = function (ev) { var x_Mouse = event.clientX;     // Get the hor
     if(Math.abs(x_Mouse - x_fire) < 50 && Math.abs(y_Mouse - y_fire) < 50){
         bigger();
     } else { moveFire(x_Mouse, y_Mouse);}
+}
+
+window.ondevicemotion = function (ev) {
+    var maxAcceleration = Math.max(Math.abs(ev.acceleration.x), Math.abs(ev.acceleration.y), Math.abs(ev.acceleration.z));
+    if(maxAcceleration > 10){
+       fires = [];
+       count = 80;
+       sizeMult = 8;
+    }
 }
 
 window.addEventListener("deviceorientation", function(event) {
