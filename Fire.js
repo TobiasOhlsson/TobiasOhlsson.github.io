@@ -1,3 +1,9 @@
+var Shake = require('shake.js');
+var myShakeEvent = new Shake({
+    threshold: 15, // optional shake strength threshold
+    timeout: 1000 // optional, determines the frequency of event generation
+});
+
 var startText;
 var count = 100;
 var lifeTime = 5;
@@ -16,6 +22,7 @@ function initalizer(a, b) {
 
 function createFire() {
     startText.style.visibility = "hidden";
+    myShakeEvent.start();
     fires = [];
     for(var a = 0; a < count; a++){
         fires.push({"x":initalizer(x_fire +(count/2),(-count)), "y":y_fire, "r":initalizer(size,sizeMult), "vy":initalizer(speed,speedMult),"life":initalizer(lifeTime,lifeTimeMult)})
@@ -102,7 +109,7 @@ window.onclick = function (ev) { var x_Mouse = event.clientX;     // Get the hor
     } else { moveFire(x_Mouse, y_Mouse);}
 }
 
-window.ondeviceorientation = function (ev) {
+/**window.ondeviceorientation = function (ev) {
     if (ev.absolute) {
         startText.innerHTML = ev.gamma;
         rotation = ev.gamma;
@@ -116,4 +123,19 @@ window.ondeviceorientation = function (ev) {
     } else {startText.innerHTML = "PDAOJV K"}
 }*/
 
-window.orientation
+window.addEventListener("deviceorientation", function(event) {
+    rotation = event.gamma;
+}, true);
+
+window.addEventListener('shake', shakeEventDidOccur, false);
+
+//function to call when shake occurs
+function shakeEventDidOccur () {
+    fires = [];
+    count = 80;
+    sizeMult = 8;
+    myShakeEvent.stop();
+    alert('shake!');
+}
+
+
