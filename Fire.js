@@ -4,19 +4,27 @@ var myShakeEvent = new Shake({
     threshold: 15, // optional shake strength threshold
     timeout: 1000 // optional, determines the frequency of event generation
 });*/
+var meter = null;
 
 var constraints = { audio: true, video: false };
+
+// Older browsers might not implement mediaDevices at all, so we set an empty object first
+if (navigator.mediaDevices === undefined) {
+    navigator.mediaDevices = {};
+}
+
 navigator.mediaDevices.getUserMedia(constraints)
     .then(function(stream) {
         window.AudioContext = window.AudioContext || window.webkitAudioContext;
         var audioContext = new AudioContext();
 
-        // Create an AudioNode from the stream
-        var mediaStreamSource = audioContext.createMediaStreamSource(stream);
+        // Create an AudioNode from the stream.
+        mediaStreamSource = audioContext.createMediaStreamSource(stream);
 
-        // Connect it to destination to hear yourself
-        // or any other node for processing!
-        mediaStreamSource.connect(audioContext.destination);
+        // Create a new volume meter and connect it.
+        meter = createAudioMeter(audioContext);
+        mediaStreamSource.connect(meter);
+
     })
     .catch(function(err) {
         /* handle the error */
@@ -40,7 +48,7 @@ function initializer(a, b) {
 }
 
 function createFire() {
-    startText.style.visibility = "hidden";
+    //startText.style.visibility = "hidden";
     //myShakeEvent.start();
     fires = [];
     for(var a = 0; a < count; a++){
@@ -103,6 +111,13 @@ function display() {
             fires[b].vy = initializer(speed,speedMult);
         }
     }
+
+
+    if(meter != null) {
+        if(meter.volume > 0.3) {
+            smaller();
+        }
+    }
 }
 
 window.onload=function(){
@@ -122,7 +137,7 @@ window.onload=function(){
 
 window.onclick = function (ev) { var x_Mouse = event.clientX;     // Get the horizontal coordinate
     var y_Mouse = event.clientY;     // Get the vertical coordinate
-    console.log(x_Mouse + " " + y_Mouse);
+    //console.log(x_Mouse + " " + y_Mouse);
     if(Math.abs(x_Mouse - x_fire) < 50 && Math.abs(y_Mouse - y_fire) < 50){
         bigger();
     } else { moveFire(x_Mouse, y_Mouse);}
@@ -147,7 +162,6 @@ window.addEventListener("deviceorientation", function(event) {
 }, true);
 
 window.addEventListener('shake', shakeEventDidOccur, false);
-
 //function to call when shake occurs
 function shakeEventDidOccur () {
     //fires = [];
@@ -156,5 +170,3 @@ function shakeEventDidOccur () {
     myShakeEvent.stop();
     alert('shake!');
 }
-
-
