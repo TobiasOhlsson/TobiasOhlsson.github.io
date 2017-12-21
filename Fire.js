@@ -83,7 +83,6 @@ function display() {
 
 
     if(meter != null) {
-        startText.innerHTML = meter.volume;
         if(meter.volume > 0.35) {
             smaller();
         }
@@ -137,7 +136,7 @@ window.onclick = function (ev) { var x_Mouse = event.clientX;     // Get the hor
 
 window.ondevicemotion = function (ev) {
     var maxAcceleration = Math.max(Math.abs(ev.acceleration.x), Math.abs(ev.acceleration.y), Math.abs(ev.acceleration.z));
-    if(maxAcceleration > 10){
+    startText.innerHTML = maxAcceleration;
        fires = [];
        count = 80;
        sizeMult = 8;
