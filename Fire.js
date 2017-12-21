@@ -94,8 +94,7 @@ function initializer(a, b) {
 }
 
 function createFire() {
-    //startText.style.visibility = "hidden";
-    //myShakeEvent.start();
+    startText.style.visibility = "hidden";
     fires = [];
     for(var a = 0; a < count; a++){
         fires.push({"x":initializer(x_fire +(count/2),(-count)), "y":y_fire, "r":initializer(size,sizeMult), "vy":initializer(speed,speedMult),"life":initializer(lifeTime,lifeTimeMult)})
@@ -136,8 +135,8 @@ window.onclick = function (ev) { var x_Mouse = event.clientX;     // Get the hor
 
 window.ondevicemotion = function (ev) {
     var maxAcceleration = Math.max(Math.abs(ev.acceleration.x), Math.abs(ev.acceleration.y), Math.abs(ev.acceleration.z));
-    startText.innerHTML = maxAcceleration;
-    if(maxAcceleration > 30){
+    //startText.innerHTML = maxAcceleration;
+    if(maxAcceleration > 25){
        fires = [];
        count = 80;
        sizeMult = 8;
