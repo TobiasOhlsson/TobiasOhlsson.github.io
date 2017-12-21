@@ -1,10 +1,3 @@
-/**var Shake = require('shake.js');
-
-var myShakeEvent = new Shake({
-    threshold: 15, // optional shake strength threshold
-    timeout: 1000 // optional, determines the frequency of event generation
-});*/
-
 var constraints = { audio: true, video: false };
 var meter = null;
 
@@ -134,8 +127,6 @@ function moveFire(x,y) {
     createFire();
 }
 
-function rotate(){}
-
 window.onclick = function (ev) { var x_Mouse = event.clientX;     // Get the horizontal coordinate
     var y_Mouse = event.clientY;     // Get the vertical coordinate
     //console.log(x_Mouse + " " + y_Mouse);
@@ -144,30 +135,7 @@ window.onclick = function (ev) { var x_Mouse = event.clientX;     // Get the hor
     } else { moveFire(x_Mouse, y_Mouse);}
 }
 
-/**window.ondeviceorientation = function (ev) {
-    if (ev.absolute) {
-        startText.innerHTML = ev.gamma;
-        rotation = ev.gamma;
-    }
-}
-
-/**window.ondevicemotion = function(event) {
-    var rates = event.rotationRate;
-    if (rates.alpha != null){
-        startText.innerHTML = rates.alpha + "kdsljn";
-    } else {startText.innerHTML = "PDAOJV K"}
-}*/
-
 window.addEventListener("deviceorientation", function(event) {
     rotation = event.gamma;
 }, true);
 
-window.addEventListener('shake', shakeEventDidOccur, false);
-//function to call when shake occurs
-function shakeEventDidOccur () {
-    //fires = [];
-    count = 80;
-    sizeMult = 8;
-    myShakeEvent.stop();
-    alert('shake!');
-}
