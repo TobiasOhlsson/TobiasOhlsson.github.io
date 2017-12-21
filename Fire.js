@@ -1,8 +1,27 @@
-var Shake = require('shake.js');
+/**var Shake = require('shake.js');
+
 var myShakeEvent = new Shake({
     threshold: 15, // optional shake strength threshold
     timeout: 1000 // optional, determines the frequency of event generation
-});
+});*/
+
+var constraints = { audio: true, video: false };
+navigator.mediaDevices.getUserMedia(constraints)
+    .then(function(stream) {
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        var audioContext = new AudioContext();
+
+        // Create an AudioNode from the stream
+        var mediaStreamSource = audioContext.createMediaStreamSource(stream);
+
+        // Connect it to destination to hear yourself
+        // or any other node for processing!
+        mediaStreamSource.connect(audioContext.destination);
+    })
+    .catch(function(err) {
+        /* handle the error */
+    });
+
 
 var startText;
 var count = 100;
@@ -16,16 +35,16 @@ var x_fire = 0;
 var y_fire = 0;
 var rotation = 0;
 
-function initalizer(a, b) {
+function initializer(a, b) {
     return a+b*Math.random();
 }
 
 function createFire() {
     startText.style.visibility = "hidden";
-    myShakeEvent.start();
+    //myShakeEvent.start();
     fires = [];
     for(var a = 0; a < count; a++){
-        fires.push({"x":initalizer(x_fire +(count/2),(-count)), "y":y_fire, "r":initalizer(size,sizeMult), "vy":initalizer(speed,speedMult),"life":initalizer(lifeTime,lifeTimeMult)})
+        fires.push({"x":initializer(x_fire +(count/2),(-count)), "y":y_fire, "r":initializer(size,sizeMult), "vy":initializer(speed,speedMult),"life":initializer(lifeTime,lifeTimeMult)})
     }
 }
 
@@ -41,7 +60,7 @@ function bigger(){
     count += 20;
     sizeMult += 2;
     for(var i = 0; i < 20; i++){
-        fires.push({"x":initalizer(x_fire +(count/2),(-count)), "y":y_fire, "r":initalizer(size,sizeMult), "vy":initalizer(speed,speedMult),"life":initalizer(lifeTime,lifeTimeMult)})
+        fires.push({"x":initializer(x_fire +(count/2),(-count)), "y":y_fire, "r":initializer(size,sizeMult), "vy":initializer(speed,speedMult),"life":initializer(lifeTime,lifeTimeMult)})
     }
 }
 
@@ -77,11 +96,11 @@ function display() {
         fires[b].life-=0.2;
 
         if(fires[b].life<0 || fires[b].r <0){
-            fires[b].x = initalizer(x_fire +(count/2),(-count))
+            fires[b].x = initializer(x_fire +(count/2),(-count))
             fires[b].y = y_fire;
-            fires[b].r = initalizer(size,sizeMult);
-            fires[b].life = initalizer(lifeTime, lifeTimeMult);
-            fires[b].vy = initalizer(speed,speedMult);
+            fires[b].r = initializer(size,sizeMult);
+            fires[b].life = initializer(lifeTime, lifeTimeMult);
+            fires[b].vy = initializer(speed,speedMult);
         }
     }
 }
@@ -131,7 +150,7 @@ window.addEventListener('shake', shakeEventDidOccur, false);
 
 //function to call when shake occurs
 function shakeEventDidOccur () {
-    fires = [];
+    //fires = [];
     count = 80;
     sizeMult = 8;
     myShakeEvent.stop();
