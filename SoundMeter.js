@@ -22,22 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-/*
-
-Usage:
-audioNode = createAudioMeter(audioContext,clipLevel,averaging,clipLag);
-
-audioContext: the AudioContext you're using.
-clipLevel: the level (0 to 1) that you would consider "clipping".
-   Defaults to 0.98.
-averaging: how "smoothed" you would like the meter to be over time.
-   Should be between 0 and less than 1.  Defaults to 0.95.
-clipLag: how long you would like the "clipping" indicator to show
-   after clipping has occured, in milliseconds.  Defaults to 750ms.
-
-Access the clipping through node.checkClipping(); use node.shutdown to get rid of it.
-*/
-
 function createAudioMeter(audioContext,clipLevel,averaging,clipLag) {
     var processor = audioContext.createScriptProcessor(512);
     processor.onaudioprocess = volumeAudioProcess;
