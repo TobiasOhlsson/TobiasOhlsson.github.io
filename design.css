@@ -7,12 +7,11 @@ canvas{
 }
 
 #helpButton{
-
     background-color: Red;
-    border-radius: 1000px;
+    border-radius: 10vmin;
     position: absolute;
-    top: 15px;
-    right:50px;
+    top: 3vh;
+    right:3vw;
     text-decoration: none;
     user-select: none;
 }

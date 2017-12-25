@@ -28,7 +28,7 @@ window.onload=function(){
     w = window.innerWidth;
     canvas.height = h;
     canvas.width = w;
-    ctx.font ="30px Arial";
+    ctx.font ="3vw Arial";
 
 
     setInterval(display ,refresh_time);
