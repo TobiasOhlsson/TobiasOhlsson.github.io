@@ -5,9 +5,14 @@ canvas{
     margin: 0;
     padding: 0;
 }
-.startText {
-    font-size: xx-large;
-    color: red;
+
+#helpButton{
+
+    background-color: Red;
+    border-radius: 1000px;
     position: absolute;
-    z-index: 1;
+    top: 25px;
+    right:50px;
+    text-decoration: none;
+    user-select: none;
 }

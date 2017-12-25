@@ -8,8 +8,6 @@ const refresh_time = 100;
 var constraints = { audio: true, video: false };
 var meter = null;
 
-var startText;
-
 var count = count_init;
 var lifeTime = 5;
 var lifeTimeMult = multiplikator;
@@ -22,6 +20,7 @@ var y_fire = 0;
 var rotation = 0;
 
 
+
 window.onload=function(){
     canvas= document.querySelector("#canvas");
     ctx = canvas.getContext("2d");
@@ -29,11 +28,8 @@ window.onload=function(){
     w = window.innerWidth;
     canvas.height = h;
     canvas.width = w;
+    ctx.font ="30px Arial";
 
-    //Places the starting text over the canvas.
-    startText = document.querySelector("#startText");
-    startText.style.left = w/3 + "px";
-    startText.style.top = h/2  + "px";
 
     setInterval(display ,refresh_time);
 }
@@ -71,6 +67,10 @@ function display() {
     ctx.clearRect(0,0,w,h);
     ctx.fillRect(0,0,w,h);
     ctx.globalCompositeOperation="lighter";
+
+
+    ctx.fillStyle = "red";
+    ctx.fillText("Press anywhere to light up a fire",30,50);
 
     for(var b = 0; b < count; b++){
         var renk = ctx.createRadialGradient(fires[b].x,fires[b].y,2,fires[b].x,fires[b].y,fires[b].r);
@@ -124,7 +124,6 @@ function initializer(a, b) {
  * This function removes all fire bubbles and creates #count new ones.
  */
 function createFire() {
-    startText.style.visibility = "hidden";
     fires = [];
     for(var a = 0; a < count; a++){
         fires.push({"x":initializer(x_fire +(count/2),(-count)), "y":y_fire, "r":initializer(size,sizeMult), "vy":initializer(speed,speedMult),"life":initializer(lifeTime,lifeTimeMult)})
