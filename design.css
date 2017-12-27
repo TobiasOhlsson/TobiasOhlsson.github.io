@@ -15,3 +15,25 @@ canvas{
     text-decoration: none;
     user-select: none;
 }
+
+#backButton{
+    background-color: Red;
+    border-radius: 10vmin;
+    top: 3vh;
+    right:88vw;
+    text-decoration: none;
+    user-select: none;
+}
+
+table{
+    font-style: italic;
+    font-size: xx-large;
+    color: red;
+    height: 80vh;
+    column-width: 100vw;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid Yellow;
+}
