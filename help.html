@@ -9,8 +9,14 @@
     <link rel="stylesheet" type="text/css" href="design.css">
 </head>
 
-<body bgcolor="black">
-<a href="index.html" id="backButton"><i class="material-icons" style="font-size:4vmax; padding:3vmin; color:Yellow;">Back</i></a>
+<body bgcolor="black" onclick="goBack()">
+
+<script>
+    function goBack() {
+        window.open("index.html","_self")
+    }
+</script>
+
 <table style="width:100%">
         <tr>
             <th>What can you do on this Website?</th>
