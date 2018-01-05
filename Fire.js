@@ -1,28 +1,43 @@
-const multiplikator = 10;
+//Empirically determined values which describe the behaviour of the fire.
+const multiplier = 10;
 const count_init = 100;
 const changeFactor = 20;
-const sound_threshold = 0.33;
-const accerleration_threshold = 30;
 const refresh_time = 100;
 
+//These thresholds determine if the specific input value is high enough to take an action.
+const sound_threshold = 0.33;
+const acceleration_threshold = 30;
+
+//Used to acquire an audio input.
 var constraints = { audio: true, video: false };
 var meter = null;
 
+//Defines the total amount of fire bubbles and the size of the spawn area.
 var count = count_init;
+
+//Defines the maximum life time of each fire bubble. Each value is in [lifeTime, (lifeTime+lifeTimeMult)]
 var lifeTime = 5;
-var lifeTimeMult = multiplikator;
+var lifeTimeMult = multiplier;
+
+//Defines the speed of each fire bubble. Similar to the life time value.
 var speed = 1;
-var speedMult = multiplikator;
-var size = multiplikator;
-var sizeMult = multiplikator;
-var x_fire = 0;
-var y_fire = 0;
+var speedMult = multiplier;
+
+//Defines the size of each fire bubble. Similar to the life time value.
+var size = multiplier;
+var sizeMult = multiplier;
+
+//The middle point of the spawn area.
+var x_fire;
+var y_fire;
+
+//The current device orientation.
 var rotation = 0;
 
 
 
 window.onload=function(){
-    canvas= document.querySelector("#canvas");
+    canvas = document.querySelector("#canvas");
     ctx = canvas.getContext("2d");
     h = window.innerHeight;
     w = window.innerWidth;
@@ -31,7 +46,7 @@ window.onload=function(){
     ctx.font ="3vmax Arial";
 
 
-    setInterval(display ,refresh_time);
+    setInterval(update ,refresh_time);
 }
 
 // Older browsers might not implement mediaDevices at all, so we set an empty object first
@@ -54,6 +69,7 @@ navigator.mediaDevices.getUserMedia(constraints)
 
     })
     .catch(function(err) {
+        alert("You won't experience all features without a microphone.");
         /* No further error handling is required because the use of an microphone is not elementary.*/
     });
 
@@ -61,7 +77,7 @@ navigator.mediaDevices.getUserMedia(constraints)
  * This method is in charge for the behaviour of the light bubbles.
  * It is calculating the new position and size in respect to the speed, rotation and lifetime of an bubble.
  */
-function display() {
+function update() {
     // clears the display
     ctx.fillStyle="black";
     ctx.clearRect(0,0,w,h);
@@ -161,7 +177,7 @@ function moveFire(x,y) {
     x_fire = x;
     y_fire = y;
     count = count_init;
-    sizeMult = multiplikator;
+    sizeMult = multiplier;
     createFire();
 }
 
@@ -183,9 +199,10 @@ window.onclick = function (ev) { var x_Mouse = event.clientX;     // Get the hor
  * @param ev The motion event triggered by the user.
  */
 window.ondevicemotion = function (ev) {
-    var maxAcceleration = Math.max(Math.abs(ev.acceleration.x), Math.abs(ev.acceleration.y), Math.abs(ev.acceleration.z));
-    //startText.innerHTML = maxAcceleration;
-    if(maxAcceleration > accerleration_threshold){
+    var acc = ev.acceleration;
+    var accLength = Math.sqrt(acc.x*acc.x + acc.y*acc.y + acc.z*acc.z);
+    ctx.fillText(accLength,100,100);
+    if(accLength > acceleration_threshold){
        fires = [];
        count = count_init - changeFactor;
        sizeMult = (count_init - changeFactor)/10;
