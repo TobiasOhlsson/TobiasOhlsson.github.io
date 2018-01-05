@@ -6,7 +6,7 @@ const refresh_time = 100;
 
 //These thresholds determine if the specific input value is high enough to take an action.
 const sound_threshold = 0.33;
-const acceleration_threshold = 30;
+const acceleration_threshold = 60;
 
 //Used to acquire an audio input.
 var constraints = { audio: true, video: false };
@@ -201,7 +201,6 @@ window.onclick = function (ev) { var x_Mouse = event.clientX;     // Get the hor
 window.ondevicemotion = function (ev) {
     var acc = ev.acceleration;
     var accLength = Math.sqrt(acc.x*acc.x + acc.y*acc.y + acc.z*acc.z);
-    ctx.fillText(accLength,100,100);
     if(accLength > acceleration_threshold){
        fires = [];
        count = count_init - changeFactor;
