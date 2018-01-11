@@ -100,7 +100,7 @@ function update() {
         ctx.arc(fires[b].x,fires[b].y,fires[b].r,0*Math.PI,2*Math.PI);
         ctx.fill();
         fires[b].x -= fires[b].vy*rotation/90;
-        fires[b].y -= fires[b].vy*(1 - Math.abs(rotation/90));
+        fires[b].y -= fires[b].vy;
         fires[b].r -= Math.max(fires[b].r * 0.025, 0.5);
         fires[b].life-=0.2;
 
