@@ -16,15 +16,19 @@ canvas{
     user-select: none;
 }
 
-table{
+h1{
     font-style: normal;
     font-size: 4vw;
     color: red;
-    height: 80vh;
-    column-width: 100vw;
-    border-collapse: collapse;
+    margin: 2vh;
 }
 
-th, td {
-    border: 1px solid Yellow;
+ul{
+    font-style: normal;
+    font-size: 4vw;
+    color: red;;
+}
+
+li{
+    margin: 2vh;
 }

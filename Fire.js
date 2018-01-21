@@ -34,6 +34,8 @@ var y_fire;
 //The current device orientation.
 var rotation = 0;
 
+var fires = [];
+
 
 
 window.onload=function(){
@@ -87,6 +89,10 @@ function update() {
 
     ctx.fillStyle = "red";
     ctx.fillText("Press anywhere to light up a fire",30,50);
+
+    if(fires.length == 0){
+        return;
+    }
 
     for(var b = 0; b < count; b++){
         var renk = ctx.createRadialGradient(fires[b].x,fires[b].y,2,fires[b].x,fires[b].y,fires[b].r);
