@@ -5,8 +5,8 @@ const changeFactor = 20;
 const refresh_time = 100;
 
 //These thresholds determine if the specific input value is high enough to take an action.
-const sound_threshold = 0.33;
-const acceleration_threshold = 60;
+const sound_threshold = 0.38;
+const acceleration_threshold = 50;
 
 //Used to acquire an audio input.
 var constraints = { audio: true, video: false };
@@ -47,7 +47,6 @@ window.onload=function(){
     canvas.width = w;
     ctx.font ="3vmax Arial";
 
-
     setInterval(update ,refresh_time);
 }
 
@@ -84,17 +83,15 @@ function update() {
     ctx.fillStyle="black";
     ctx.clearRect(0,0,w,h);
     ctx.fillRect(0,0,w,h);
+
+    //color is determined by adding color values of overlapping content.
     ctx.globalCompositeOperation="lighter";
 
 
     ctx.fillStyle = "red";
     ctx.fillText("Press anywhere to light up a fire",30,50);
 
-    if(fires.length == 0){
-        return;
-    }
-
-    for(var b = 0; b < count; b++){
+    for(var b = 0; b < fires.length; b++){
         var renk = ctx.createRadialGradient(fires[b].x,fires[b].y,2,fires[b].x,fires[b].y,fires[b].r);
         renk.addColorStop(0, "white");
         renk.addColorStop(0.4, "yellow");
@@ -105,6 +102,7 @@ function update() {
         ctx.beginPath();
         ctx.arc(fires[b].x,fires[b].y,fires[b].r,0*Math.PI,2*Math.PI);
         ctx.fill();
+
         fires[b].x -= fires[b].vy*rotation/90;
         fires[b].y -= fires[b].vy;
         fires[b].r -= Math.max(fires[b].r * 0.025, 0.5);
@@ -148,7 +146,11 @@ function initializer(a, b) {
 function createFire() {
     fires = [];
     for(var a = 0; a < count; a++){
-        fires.push({"x":initializer(x_fire +(count/2),(-count)), "y":y_fire, "r":initializer(size,sizeMult), "vy":initializer(speed,speedMult),"life":initializer(lifeTime,lifeTimeMult)})
+        fires.push({"x":initializer(x_fire +(count/2),(-count)),
+            "y":y_fire,
+            "r":initializer(size,sizeMult),
+            "vy":initializer(speed,speedMult),
+            "life":initializer(lifeTime,lifeTimeMult)});
     }
 }
 
@@ -170,7 +172,11 @@ function bigger(){
     count += changeFactor;
     sizeMult += changeFactor/10;
     for(var i = 0; i < changeFactor; i++){
-        fires.push({"x":initializer(x_fire +(count/2),(-count)), "y":y_fire, "r":initializer(size,sizeMult), "vy":initializer(speed,speedMult),"life":initializer(lifeTime,lifeTimeMult)})
+        fires.push({"x":initializer(x_fire +(count/2),(-count)),
+            "y":y_fire,
+            "r":initializer(size,sizeMult),
+            "vy":initializer(speed,speedMult),
+            "life":initializer(lifeTime,lifeTimeMult)});
     }
 }
 
@@ -197,7 +203,9 @@ window.onclick = function (ev) { var x_Mouse = event.clientX;     // Get the hor
     //console.log(x_Mouse + " " + y_Mouse);
     if(Math.abs(x_Mouse - x_fire) < 50 && Math.abs(y_Mouse - y_fire) < 50){
         bigger();
-    } else { moveFire(x_Mouse, y_Mouse);}
+    } else {
+        moveFire(x_Mouse, y_Mouse);
+    }
 }
 
 /**
